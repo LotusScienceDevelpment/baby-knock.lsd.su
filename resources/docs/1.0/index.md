@@ -1,0 +1,10 @@
+- ## С чего начать?
+    - [Доступные методы](/{{route}}/{{version}}/overview) 
+    - [Авторизация](/{{route}}/{{version}}/authorization) 
+    - [Тестовые данные](/{{route}}/{{version}}/tests) 
+- ## Методы
+    - [Пользователи (users)](/{{route}}/{{version}}/methods/users)
+    - [Звуки (sounds)](/{{route}}/{{version}}/methods/sounds)
+    - [Мама (mothers)](/{{route}}/{{version}}/methods/mothers)
+    - [Профиль (profile)](/{{route}}/{{version}}/methods/profile)
+    - [Пациенты (patients)](/{{route}}/{{version}}/methods/patients)
