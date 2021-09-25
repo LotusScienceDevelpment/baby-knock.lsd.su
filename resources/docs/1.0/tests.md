@@ -29,7 +29,11 @@ AccountType: doctor
 <a name="section-3"></a>
 ## QR-код для добавления врачу
 QR-код, чтобы проверить добавление аккаунта к врачу
+В нем храниться ID-устройства в виде строки: `123e4567-e89b-12d3-a456-426655440000
 
+После сканирования эту строку нужно отправлять на метод `POST /api/v1/patients/afterScan`.
+[Описание метода](http://194.58.121.186/docs/1.0/methods/patients#section-3)
+`
 ![image](/storage/websiteplanet-qr%201.png)
 
 
