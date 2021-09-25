@@ -21,7 +21,7 @@ AccountType: mom
 ## Аккаунт Врача
 Для авторизации используйте следующие данные
 ```text
-Login: +79181321819
+Login: +79181321919
 Password: 12345
 AccountType: doctor
 ```
