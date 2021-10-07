@@ -28,14 +28,21 @@ class SoundController extends Controller
     {
         $userId = 2;
         $client = new Client();
-        $response = $client->get($this->endpoint.'/save', [
-            'headers' => [
-                'Accept' => 'application/json'
-            ],
-            'json' => [
-                'user_id' => $userId
-            ]
-        ]);
+        try {
+            $response = $client->get($this->endpoint . '/save', [
+                'headers' => [
+                    'Accept' => 'application/json'
+                ],
+                'json'    => [
+                    'user_id' => $userId
+                ]
+            ]);
+        } catch (GuzzleException $e) {
+            return $this->error()->setMessage('Something wrong')->setPayload([
+                'message' => $e->getMessage(),
+                'trace' => $e->getTrace()
+            ])->setHttpCode(500)->send();
+        }
 
         $file = json_decode($response->getBody()->getContents(), true);
 
@@ -58,26 +65,32 @@ class SoundController extends Controller
      *
      * @param StreamSound $request
      * @return JsonResponse
-     * @throws GuzzleException
      */
     public function stream(StreamSound $request): JsonResponse
     {
-//        $user = auth()->user();
+        $user = auth()->user();
         $client = new Client();
-        $response = $client->post($this->endpoint.'/stream', [
-            'headers' => [
-                'Accept' => 'application/json'
-            ],
-            'json' => [
-//                'user_id' => $user->id,
-                'user_id' => 2,
-                'data' => $request->all()
-            ]
-        ]);
+        try {
+            $response = $client->post($this->endpoint . '/stream', [
+                'headers' => [
+                    'Accept' => 'application/json'
+                ],
+                'json'    => [
+                    'user_id' => $user->id,
+                    //                'user_id' => 2,
+                    'data'    => $request->all()
+                ]
+            ]);
+        } catch (GuzzleException $e) {
+            return $this->error()->setMessage('Something wrong')->setPayload([
+                'message' => $e->getMessage(),
+                'trace' => $e->getTrace()
+            ])->setHttpCode(500)->send();
+        }
 
         return $this->success()->setMessage('Data pushed')->setPayload([
-//            'user_id' => $user->id,
-            'user_id' => 2
+            'user_id' => $user->id,
+//            'user_id' => 2
         ])->send();
     }
 }
