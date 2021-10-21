@@ -10,6 +10,7 @@ use App\Models\Hearth;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Storage;
 
 class SoundController extends Controller
 {
@@ -56,6 +57,11 @@ class SoundController extends Controller
         ];
 
         Hearth::create($object);
+        $time = "[SAVE][".date('d.m.Y H:i:s', time()).'] ';
+        $log = $time . 'UserID: ' . $userId . "\n";
+        $log .= $time . "Content: \n" . $request->all() . "\n";
+
+        Storage::disk('public')->put('/stream/log.txt', $log);
 
         return $this->success()->setMessage('Hearth Bit successfully saved')->setPayload($object)->send();
     }
@@ -81,6 +87,11 @@ class SoundController extends Controller
                     'data'    => $request->all()
                 ]
             ]);
+            $time = "[STREAM][".date('d.m.Y H:i:s', time()).'] ';
+            $log = $time . 'UserID: ' . $user->id . "\n";
+            $log .= $time . "Content: \n" . $request->all() . "\n";
+
+            Storage::disk('public')->put('/stream/log.txt', $log);
         } catch (GuzzleException $e) {
             return $this->error()->setMessage('Something wrong')->setPayload([
                 'message' => $e->getMessage(),
