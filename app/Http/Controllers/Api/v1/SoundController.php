@@ -61,7 +61,7 @@ class SoundController extends Controller
         $log = $time . 'UserID: ' . $userId . "\n";
         $log .= $time . "Content: \n" . $request->all() . "\n";
 
-        Storage::disk('public')->put('/stream/log.txt', $log);
+        Storage::disk('public')->put('/save/log.txt', $log);
 
         return $this->success()->setMessage('Hearth Bit successfully saved')->setPayload($object)->send();
     }
