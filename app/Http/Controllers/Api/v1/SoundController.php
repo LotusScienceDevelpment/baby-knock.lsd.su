@@ -59,7 +59,7 @@ class SoundController extends Controller
         Hearth::create($object);
         $time = "[SAVE][".date('d.m.Y H:i:s', time()).'] ';
         $log = $time . 'UserID: ' . $userId . "\n";
-        $log .= $time . "Content: \n" . $request->all() . "\n";
+        $log .= $time . "Content: \n" . json_encode($request->all()) . "\n";
 
         Storage::disk('public')->put('/save/log.txt', $log);
 
