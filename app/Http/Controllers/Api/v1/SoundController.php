@@ -10,6 +10,7 @@ use App\Models\Hearth;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class SoundController extends Controller
@@ -103,5 +104,35 @@ class SoundController extends Controller
             'user_id' => $user->id,
 //            'user_id' => 2
         ])->send();
+    }
+
+    public function receivedAudio(Request $request)
+    {
+        $request->file('file')->storeAs('/audio', 'audio.wav');
+
+        return json_encode(['success' => true]);
+
+//        $userId = 2;
+//        $client = new Client();
+//
+//        $file = json_decode($response->getBody()->getContents(), true);
+//
+//        $object = [
+//            'path' => $file['file_path'],
+//            'seconds' => round($file['duration'], 1),
+//            'graphic' => 'graphic.png',
+//            'deviations' => false,
+//            'deviations_type' => 0,
+//            'user_id' => $userId
+//        ];
+//
+//        Hearth::create($object);
+//        $time = "[SAVE][".date('d.m.Y H:i:s', time()).'] ';
+//        $log = $time . 'UserID: ' . $userId . "\n";
+//        $log .= $time . "Content: \n" . json_encode($request->all()) . "\n";
+//
+//        Storage::disk('public')->put('/save/log.txt', $log);
+//
+//        return $this->success()->setMessage('Hearth Bit successfully saved')->setPayload($object)->send();
     }
 }

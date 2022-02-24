@@ -18,8 +18,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('/v1')->namespace('App\\Http\\Controllers\\Api\\v1')->group(function() {
-    Route::prefix('users')->group(function() {
+Route::prefix('/v1')->namespace('App\\Http\\Controllers\\Api\\v1')->group(function () {
+    Route::prefix('users')->group(function () {
         # Создать нового пользователя
         Route::put('create', 'AuthController@register')->name('users.create');
         # Войти в ученую запись
@@ -28,7 +28,11 @@ Route::prefix('/v1')->namespace('App\\Http\\Controllers\\Api\\v1')->group(functi
 //        Route::get('');
     });
 
-    Route::middleware('auth:api')->group(function() {
+    Route::prefix('device')->group(function () {
+        Route::match(['get', 'post'], 'upload', 'SoundController@receivedAudio');
+    });
+
+    Route::middleware('auth:api')->group(function () {
         Route::prefix('sounds')->group(function () {
             Route::match(['post', 'get'], 'stream', 'SoundController@stream')->name('sounds.stream');
             Route::match(['post', 'get'], 'save', 'SoundController@save')->name('sounds.save');
@@ -50,5 +54,6 @@ Route::prefix('/v1')->namespace('App\\Http\\Controllers\\Api\\v1')->group(functi
             Route::get('view', 'DoctorController@viewPatient')->name('patients.view');
             Route::post('afterScan', 'DoctorController@afterScan')->name('patients.afterScan');
         });
+
     });
 });
