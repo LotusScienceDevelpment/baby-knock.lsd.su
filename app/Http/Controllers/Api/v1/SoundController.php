@@ -111,7 +111,7 @@ class SoundController extends Controller
         $request->file('file')->storeAs('/audio', 'audio.wav');
 
 
-        return json_encode(['success' => true, 'headers' => json_encode($request->headers)]);
+        return json_encode(['success' => true, 'headers' => json_encode($request->header('X-ID'))]);
 
 //        $userId = 2;
 //        $client = new Client();
