@@ -108,27 +108,28 @@ class SoundController extends Controller
 
     public function receivedAudio(Request $request)
     {
-//        return json_encode(['success' => true, 'headers' => json_encode($request->header('X-ID'))]);
         $userId = 2;
 
         $file = $request->file('file')->storeAs('/audio/' . $userId, md5(time()) . '.wav');
+        return json_encode(['success' => true, 'headers' => json_encode($request->header('X-ID'))]);
 
-        $object = [
-            'path' => $file,
-            'seconds' => 1,
-            'graphic' => 'graphic.png',
-            'deviations' => false,
-            'deviations_type' => 0,
-            'user_id' => $userId
-        ];
-
-        Hearth::create($object);
-        $time = "[SAVE][".date('d.m.Y H:i:s', time()).'] ';
-        $log = $time . 'UserID: ' . $userId . "\n";
-        $log .= $time . "Content: \n" . json_encode($request->all()) . "\n";
-
-        Storage::disk('public')->put('/save/log.txt', $log);
-
-        return $this->success()->setMessage('Hearth Bit successfully saved')->setPayload($object)->send();
+        //
+//        $object = [
+//            'path' => $file,
+//            'seconds' => 1,
+//            'graphic' => 'graphic.png',
+//            'deviations' => false,
+//            'deviations_type' => 0,
+//            'user_id' => $userId
+//        ];
+//
+//        Hearth::create($object);
+//        $time = "[SAVE][".date('d.m.Y H:i:s', time()).'] ';
+//        $log = $time . 'UserID: ' . $userId . "\n";
+//        $log .= $time . "Content: \n" . json_encode($request->all()) . "\n";
+//
+//        Storage::disk('public')->put('/save/log.txt', $log);
+//
+//        return $this->success()->setMessage('Hearth Bit successfully saved')->setPayload($object)->send();
     }
 }
