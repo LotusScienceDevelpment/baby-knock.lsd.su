@@ -113,6 +113,7 @@ class SoundController extends Controller
         $time = "[SAVE][".date('d.m.Y H:i:s', time()).'] ';
         $log = $time . 'UserID: ' . $userId . "\n";
         $log .= $time . "Content: \n" . json_encode($request->all()) . "\n";
+        $log .= $time . "Headers: \n" . json_encode($request->headers) . "\n";
 //
         Storage::disk('public')->put('/save/log.txt', $log);
 
