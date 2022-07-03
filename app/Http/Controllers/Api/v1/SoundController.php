@@ -108,16 +108,16 @@ class SoundController extends Controller
 
     public function receivedAudio(Request $request)
     {
-        $userId = 2;
-
-        $time = "[SAVE][".date('d.m.Y H:i:s', time()).'] ';
-        $log = $time . 'UserID: ' . $userId . "\n";
-        $log .= $time . "Content: \n" . json_encode($request->all()) . "\n";
+//        $userId = 2;
 //
-        Storage::disk('public')->put('/save/log.txt', $log);
+//        $time = "[SAVE][".date('d.m.Y H:i:s', time()).'] ';
+//        $log = $time . 'UserID: ' . $userId . "\n";
+//        $log .= $time . "Content: \n" . json_encode($request->all()) . "\n";
+////
+//        Storage::disk('public')->put('/save/log.txt', $log);
 //
 
-        $path = $request->file('file')->storeAs('/audio/' . $userId, md5(time()) . '.wav');
+        $path = $request->file('file')->storeAs('/audio', md5(time()) . '.wav');
 
 
         return json_encode(['success' => true, 'headers' => json_encode($request->header('X-ID'))]);
