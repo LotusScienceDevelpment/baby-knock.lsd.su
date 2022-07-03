@@ -113,12 +113,12 @@ class SoundController extends Controller
         $time = "[SAVE][".date('d.m.Y H:i:s', time()).'] ';
         $log = $time . 'UserID: ' . $userId . "\n";
         $log .= $time . "Content: \n" . json_encode($request->all()) . "\n";
-        $log .= $time . "Headers: \n" . json_encode($request->headers) . "\n";
+        $log .= $time . "ID: \n" . json_encode($request->header('X-ID')) . "\n";
 //
         Storage::disk('public')->put('/save/log.txt', $log);
 
 //
-        $path = $request->file('file')->storeAs('/audio', 'test.wav');
+        $path = $request->file('file')->storeAs('/audio', md5(time()) . '.wav');
 
 
         return json_encode(['success' => true, 'headers' => json_encode($request->header('X-ID'))]);
