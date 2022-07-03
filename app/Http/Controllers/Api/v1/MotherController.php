@@ -46,6 +46,7 @@ class MotherController extends Controller
             'deviations_type', 'created_at', 'updated_at'
         ]);
 
+
         # Если не задано имя, то возвращаем дату как имя
         foreach ($hearths as $key => $item) {
             if ($item['name'] == null) {
