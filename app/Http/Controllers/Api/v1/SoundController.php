@@ -120,7 +120,7 @@ class SoundController extends Controller
 
         $path = $request->file('file')->storeAs('/public/audio/' . $userId, md5(time()) . '.wav');
 
-        $path = str_replace('/public', '', $path);
+        $path = str_replace('public', '', $path);
 
         Hearth::create([
             'path' => 'http://194.58.121.186/storage/' . $path,
