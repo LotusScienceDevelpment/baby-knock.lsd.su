@@ -30,6 +30,7 @@ class DoctorController extends Controller
             ->where('doctor_id', auth()->user()->id)
             ->join('hearths', 'hearths.user_id', '=', 'users.id');
 
+
         # С какой записи начинать
         if ($request->has('offset')) {
             $patients = $patients->offset($request->offset);
@@ -63,13 +64,14 @@ class DoctorController extends Controller
             }
         }
 
+
         # Какие поля необходимо получить
         $only = [
             'users.id', 'first_name', 'last_name', 'deviations', 'hearths.created_at'
         ];
 
         # Получаем и убираем все дубликаты из-за присоединения другой таблицы
-        $patients = $patients->get($only)->duplicates()->unique('id');
+        $patients = $patients->get($only);
 
         # Проходимся по все пациентам
         foreach ($patients as $key => $item) {
@@ -81,6 +83,7 @@ class DoctorController extends Controller
 
         # Восстанавливаем ключи массива
         $patients = $patients->values();
+
 
         # Выдаем ответ
         return $this->success()->setMessage('Patients successfully loaded')->setPayload($patients)->send();
