@@ -7,6 +7,7 @@ use App\Http\Requests\Sound\SaveSound;
 use App\Http\Requests\Sound\StreamSound;
 use App\Http\Utils\Response;
 use App\Models\Hearth;
+use App\Models\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
@@ -109,17 +110,24 @@ class SoundController extends Controller
     public function receivedAudio(Request $request)
     {
         $userId = 2;
-//
         $time = "[SAVE][".date('d.m.Y H:i:s', time()).'] ';
         $log = $time . 'UserID: ' . $userId . "\n";
         $log .= $time . "Content: \n" . json_encode($request->all()) . "\n";
         $log .= $time . "ID: \n" . json_encode($request->header('X-ID')) . "\n";
-//
         Storage::disk('public')->put('/save/log.txt', $log);
 
-//
-        $path = $request->file('file')->storeAs('/audio', md5(time()) . '.wav');
+        $user = User::where('device_id', $request->header('X-ID'))->first();
 
+        $path = $request->file('file')->storeAs('/audio/' . $userId, md5(time()) . '.wav');
+
+        Hearth::create([
+            'path' => $path,
+            'seconds' => 1,
+            'graphic' => 'graphic.png',
+            'deviations' => false,
+            'deviations_type' => 0,
+            'user_id' => $user->id
+        ]);
 
         return json_encode(['success' => true, 'headers' => json_encode($request->header('X-ID'))]);
 
